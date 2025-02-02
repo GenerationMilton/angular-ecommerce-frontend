@@ -7,6 +7,8 @@ import { HttpClientModule} from '@angular/common/http';
 import { ProductService } from './services/product.service';
 
 import {Routes, RouterModule} from '@angular/router';
+import { ProductCategotyMenuComponent } from './components/product-categoty-menu/product-categoty-menu.component';
+import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 
 //define our routes of products
 const routes:Routes=[
@@ -20,7 +22,9 @@ const routes:Routes=[
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductCategotyMenuComponent,
+    ProductCategoryMenuComponent
   ],
   //declare RouterModule for our routes
   imports: [
