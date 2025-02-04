@@ -12,7 +12,8 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
 
 //define our routes of products
 const routes:Routes=[
-  {path: 'category/:id', component: ProductListComponent},
+  //new path for category name y template
+  {path: 'category/:id/:name', component: ProductListComponent},
   {path: 'category', component: ProductListComponent},
   {path: 'products', component: ProductListComponent},
   {path: '', redirectTo:'/products', pathMatch:'full'},
