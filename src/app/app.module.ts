@@ -9,9 +9,12 @@ import { ProductService } from './services/product.service';
 import {Routes, RouterModule} from '@angular/router';
 
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { SearchComponent } from './components/search/search.component';
 
 //define our routes of products
 const routes:Routes=[
+  //new path for search products by name
+  {path:'search/:keyword', component:ProductListComponent},
   //new path for category name y template
   {path: 'category/:id/:name', component: ProductListComponent},
   {path: 'category', component: ProductListComponent},
@@ -24,7 +27,8 @@ const routes:Routes=[
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductCategoryMenuComponent
+    ProductCategoryMenuComponent,
+    SearchComponent
   ],
   //declare RouterModule for our routes
   imports: [
