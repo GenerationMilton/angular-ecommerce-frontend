@@ -16,6 +16,9 @@ export class ProductListComponent {
   //add currente category Id
   currentCategoryId:number=1;
 
+  //Update component to read the category name
+  currentCategoryName: string = "";
+
 
   constructor(private productService: ProductService,
   private route: ActivatedRoute){}
@@ -32,14 +35,18 @@ export class ProductListComponent {
     //check if "id" parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
 
-    if(hasCategoryId){
-      //get the "id" param string. convert string to a number using the "+"symbol
-      this.currentCategoryId =+this.route.snapshot.paramMap.get('id')!;
+    if (hasCategoryId) {
+      // get the "id" param string. convert string to a number using the "+" symbol
+      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+ 
+      // get the "name" param string
+      this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
     }
 
-    else{
-      //not category id available ...default to category id 1
-      this.currentCategoryId=1;
+    else {
+      // not category id available ... default to category id 1
+      this.currentCategoryId = 1;
+      this.currentCategoryName = 'Books';
     }
 
     //now get the products for the given category id
