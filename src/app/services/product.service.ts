@@ -10,19 +10,22 @@ import { ProductCategory } from '../common/product-category';
 })
 export class ProductService {
 
-  
-  getProduct(theProductId: number) {
-    throw new Error('Method not implemented.');
-  }
- 
-
-
   private baseUrl='http://localhost:8080/api/products';
 
   //new url to product-category
   private categoryUrl ='http://localhost:8080/api/product-category';
 
   constructor(private httpClient: HttpClient) { }
+
+  //update the get product method to product master detail view
+  getProduct(theProductId: number):Observable<Product> {
+    //need to build URL based on product id
+    const productUrl = `${this.baseUrl}/${theProductId}`;
+
+    return this.httpClient.get<Product>(productUrl);
+    
+  }
+ 
 
   //update the category argument to product-list
 
