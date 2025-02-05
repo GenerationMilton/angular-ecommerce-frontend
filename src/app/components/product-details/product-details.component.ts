@@ -12,8 +12,7 @@ export class ProductDetailsComponent implements OnInit {
   
 
   //initialize Products
-  product!: Product;
-
+  product: Product = new Product();
   //inject dependencies
   constructor(private productService: ProductService,
               private route: ActivatedRoute){}
