@@ -26,7 +26,7 @@ export class ProductListComponent {
 
   //new properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
+  thePageSize: number = 5;
   theTotalElements: number = 0;
 
   constructor(
