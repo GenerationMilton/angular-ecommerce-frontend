@@ -9,6 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent {
+
   //array of product
   products: Product[] = [];
 
@@ -110,4 +111,10 @@ export class ProductListComponent {
         this.theTotalElements = data.page.totalElements;
       });
   }
+
+  updatePageSize(pageSize: string) {
+      this.thePageSize= +pageSize;
+      this.thePageNumber =1;
+      this.listProducts();
+    }
 }
