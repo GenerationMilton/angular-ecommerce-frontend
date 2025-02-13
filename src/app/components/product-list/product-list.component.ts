@@ -9,7 +9,6 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent {
-
   //array of product
   products: Product[] = [];
 
@@ -30,7 +29,7 @@ export class ProductListComponent {
   thePageSize: number = 5;
   theTotalElements: number = 0;
 
-  previousKeyword: string ="";
+  previousKeyword: string = '';
 
   constructor(
     private productService: ProductService,
@@ -57,7 +56,6 @@ export class ProductListComponent {
 
   //new method
   handleSearchProducts() {
-
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
     // if we have a different keyword than previous
@@ -72,12 +70,14 @@ export class ProductListComponent {
     console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
 
     // now search for the products using keyword
-    this.productService.searchProductsPaginate(this.thePageNumber - 1,
-                                               this.thePageSize,
-                                               theKeyword).subscribe(this.processResult());
-                                               
+    this.productService
+      .searchProductsPaginate(
+        this.thePageNumber - 1,
+        this.thePageSize,
+        theKeyword
+      )
+      .subscribe(this.processResult());
   }
-
 
   //new method to search products
 
@@ -114,24 +114,33 @@ export class ProductListComponent {
     );
 
     // now get the products for the given category id
-    this.productService.getProductListPaginate(this.thePageNumber - 1,
-      this.thePageSize,
-      this.currentCategoryId)
+    this.productService
+      .getProductListPaginate(
+        this.thePageNumber - 1,
+        this.thePageSize,
+        this.currentCategoryId
+      )
       .subscribe(this.processResult());
   }
 
   updatePageSize(pageSize: string) {
-      this.thePageSize= +pageSize;
-      this.thePageNumber =1;
-      this.listProducts();
-    }
+    this.thePageSize = +pageSize;
+    this.thePageNumber = 1;
+    this.listProducts();
+  }
 
-    processResult() {
-      return (data: any) => {
-        this.products = data._embedded.products;
-        this.thePageNumber = data.page.number + 1;
-        this.thePageSize = data.page.size;
-        this.theTotalElements = data.page.totalElements;
-      };
-    }
+  processResult() {
+    return (data: any) => {
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
+  }
+
+  addToCart(theProduct: Product) {
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+    //TODO ...do the real work
+    
+  }
 }
