@@ -126,10 +126,14 @@ export class ProductListComponent {
       .subscribe(this.processResult());
   }
 
-  updatePageSize(pageSize: string) {
-    this.thePageSize = +pageSize;
-    this.thePageNumber = 1;
-    this.listProducts();
+  updatePageSize(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement | null; // Cast to HTMLSelectElement and allow null
+    if (selectElement) { // Ensure selectElement is not null
+      const pageSize = selectElement.value; // This is a string from the <select>
+      this.thePageSize = +pageSize; // Convert to number using unary operator
+      this.thePageNumber = 1; // Reset page number to 1
+      this.listProducts(); // Call the method to load the products
+    }
   }
 
   processResult() {
