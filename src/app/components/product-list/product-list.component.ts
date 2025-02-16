@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -9,7 +11,6 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent {
-
   //array of product
   products: Product[] = [];
 
@@ -30,11 +31,12 @@ export class ProductListComponent {
   thePageSize: number = 5;
   theTotalElements: number = 0;
 
-  previousKeyword: string ="";
+  previousKeyword: string = '';
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +59,6 @@ export class ProductListComponent {
 
   //new method
   handleSearchProducts() {
-
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
     // if we have a different keyword than previous
@@ -72,12 +73,14 @@ export class ProductListComponent {
     console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
 
     // now search for the products using keyword
-    this.productService.searchProductsPaginate(this.thePageNumber - 1,
-                                               this.thePageSize,
-                                               theKeyword).subscribe(this.processResult());
-                                               
+    this.productService
+      .searchProductsPaginate(
+        this.thePageNumber - 1,
+        this.thePageSize,
+        theKeyword
+      )
+      .subscribe(this.processResult());
   }
-
 
   //new method to search products
 
@@ -114,24 +117,39 @@ export class ProductListComponent {
     );
 
     // now get the products for the given category id
-    this.productService.getProductListPaginate(this.thePageNumber - 1,
-      this.thePageSize,
-      this.currentCategoryId)
+    this.productService
+      .getProductListPaginate(
+        this.thePageNumber - 1,
+        this.thePageSize,
+        this.currentCategoryId
+      )
       .subscribe(this.processResult());
   }
 
-  updatePageSize(pageSize: string) {
-      this.thePageSize= +pageSize;
-      this.thePageNumber =1;
-      this.listProducts();
+  updatePageSize(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement | null; // Cast to HTMLSelectElement and allow null
+    if (selectElement) { // Ensure selectElement is not null
+      const pageSize = selectElement.value; // This is a string from the <select>
+      this.thePageSize = +pageSize; // Convert to number using unary operator
+      this.thePageNumber = 1; // Reset page number to 1
+      this.listProducts(); // Call the method to load the products
     }
+  }
 
-    processResult() {
-      return (data: any) => {
-        this.products = data._embedded.products;
-        this.thePageNumber = data.page.number + 1;
-        this.thePageSize = data.page.size;
-        this.theTotalElements = data.page.totalElements;
-      };
-    }
+  processResult() {
+    return (data: any) => {
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
+  }
+
+  addToCart(theProduct: Product) {
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+    //TODO ...do the real work
+    const theCartItem= new CartItem(theProduct);
+    
+    this.cartService.addToCart(theCartItem);
+  }
 }
