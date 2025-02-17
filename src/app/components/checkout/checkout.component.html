@@ -3,7 +3,7 @@
     <div class="section-content section-content-p30">
 
         <div class="container-fluid">
-            <form [formGroup]="checkoutFromGroup">
+            <form [formGroup]="checkoutFromGroup" (ngSubmit)="onSubmit()">
             
                 <!-- customer form group-->
                 <div formGroupName="customer" class="form-area">

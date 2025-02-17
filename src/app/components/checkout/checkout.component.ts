@@ -26,4 +26,10 @@ export class CheckoutComponent implements OnInit{
     });
   }
 
+  //method to purchase
+  onSubmit(){
+    console.log("handling the submit button");
+    console.log(this.checkoutFromGroup.get('customer')!.value);
+    console.log("The email address is "+ this.checkoutFromGroup.get('customer')!.value.email);
+  }
 }
