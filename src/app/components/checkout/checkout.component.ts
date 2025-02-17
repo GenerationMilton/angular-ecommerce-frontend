@@ -6,9 +6,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent implements Oninit{
+export class CheckoutComponent implements OnInit{
 
-  checkoutFromGroup: FormGroup | undefined;
+  checkoutFromGroup!: FormGroup;
 
 
   constructor( private formBuilder: FormBuilder){}
