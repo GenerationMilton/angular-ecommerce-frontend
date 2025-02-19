@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class CheckoutComponent implements OnInit{
 
+
   checkoutFromGroup!: FormGroup;
 
 
@@ -51,10 +52,23 @@ export class CheckoutComponent implements OnInit{
     });
   }
 
+  //checkbox to validate and copy
+  copyShippingAddressToBillingAddress(event: Event): void {
+    if(event.target!.checked){
+      this.checkoutFromGroup.controls['billingAddress']
+        .setValue(this.checkoutFromGroup.controls['shippingAddress'].value);
+      }
+      else {
+        this.checkoutFromGroup.controls['billingAddress'].reset();
+      }
+    }
+
   //method to purchase
   onSubmit(){
     console.log("handling the submit button");
     console.log(this.checkoutFromGroup.get('customer')!.value);
     console.log("The email address is "+ this.checkoutFromGroup.get('customer')!.value.email);
   }
+
+ 
 }
