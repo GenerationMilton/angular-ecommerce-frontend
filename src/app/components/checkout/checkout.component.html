@@ -3,7 +3,7 @@
     <div class="section-content section-content-p30">
 
         <div class="container-fluid">
-            <form [formGroup]="checkoutFromGroup" (ngSubmit)="onSubmit()">
+            <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
 
                 <!-- customer form group-->
                 <div formGroupName="customer" class="form-area">
@@ -105,8 +105,8 @@
 
                 </div>
 
-                <!-- add check box to copy shipping to billing-->
-                <div class="input-space">
+                  <!-- Add check box to copy shipping to billing -->
+                  <div class="input-space">
                     <label class="au-checkbox">
                         <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
                         <span class="au-checkmark"></span>Billing Address same as Shipping Address
