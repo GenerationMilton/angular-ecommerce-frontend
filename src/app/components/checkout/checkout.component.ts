@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Country } from 'src/app/common/country';
 import { LivemiltonShopFormService } from 'src/app/services/livemilton-shop-form.service';
 
 @Component({
@@ -16,6 +17,9 @@ export class CheckoutComponent implements OnInit {
   //properties to year and months
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+
+  //populate countries and states
+  countries:Country[]=[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -72,6 +76,19 @@ export class CheckoutComponent implements OnInit {
       console.log('Retrieved credit card years: ' + JSON.stringify(data));
       this.creditCardYears = data;
     });
+
+    //populate the countries
+    this.livemiltonShopFormservice.getCountries().subscribe(
+      data=>{
+        console.log("Retrieved countries: " + JSON.stringify(data));
+        this.countries=data;
+      }
+     
+    )
+
+
+
+
   }
 
   copyShippingAddressToBillingAddress(event: any) {
