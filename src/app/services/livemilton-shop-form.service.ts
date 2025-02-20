@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable} from 'rxjs';
+import { Observable, map} from 'rxjs';
 import {of} from 'rxjs';
+import { Country } from '../common/country';
+import { State } from '../common/state';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,24 @@ export class LivemiltonShopFormService {
   private statesUrl='http://localhost:8080/api/states';
 
   constructor(private httpClient: HttpClient) { }
+
+  //get countries observable
+  getCountries(): Observable<Country[]>{
+
+    return this.httpClient.get<GetResponseCountries>(this.countriesUrl).pipe(
+      map(response => response._embedded.countries)
+    );
+  }
+
+  getStates(theCountryCode: string): Observable<State[]>{
+    //search url
+    const searchStatesUrl=`${this.statesUrl}/search/findbyCountryCode?code=${theCountryCode}`;
+
+    //call 
+    return this.httpClient.get<GetResponseStates>(searchStatesUrl).pipe(
+      map(response => response._embedded.states)
+    );
+  }
 
   //return an observable array
   getCreditCardMonths(startMonth: number): Observable<number[]>{
@@ -50,3 +70,18 @@ export class LivemiltonShopFormService {
     return of (data);
   }
 }
+
+
+interface GetResponseCountries{
+  _embedded:{
+    countries: Country[];
+  }
+}
+
+interface GetResponseStates{
+  _embedded:{
+    states: State[];
+  }
+
+}
+  
