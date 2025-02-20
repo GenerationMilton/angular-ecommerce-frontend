@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable} from 'rxjs';
@@ -8,7 +9,11 @@ import {of} from 'rxjs';
 })
 export class LivemiltonShopFormService {
 
-  constructor() { }
+  //service for countries and states
+  private countriesUrl= 'http://localhost:8080/api/countries';
+  private statesUrl='http://localhost:8080/api/states';
+
+  constructor(private httpClient: HttpClient) { }
 
   //return an observable array
   getCreditCardMonths(startMonth: number): Observable<number[]>{
