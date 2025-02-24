@@ -38,8 +38,10 @@ export class CheckoutComponent implements OnInit {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('',[Validators.required, Validators.minLength(2)]),
-        lastName: [''],
-        email: [''],
+        lastName: new FormControl('',[Validators.required, Validators.minLength(2)]),
+        email: new FormControl('',
+                              [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]
+        ),
       }),
       shippingAddress: this.formBuilder.group({
         country: [''],
@@ -97,6 +99,20 @@ export class CheckoutComponent implements OnInit {
 
 
   }
+
+  get firstName(){
+    return this.checkoutFormGroup.get('customer.firstName');
+  }
+
+  get lastName(){
+    return this.checkoutFormGroup.get('customer.lastName');
+  }
+
+
+  get email(){
+    return this.checkoutFormGroup.get('customer.email');
+  }
+
 
   copyShippingAddressToBillingAddress(event:any) {
 
