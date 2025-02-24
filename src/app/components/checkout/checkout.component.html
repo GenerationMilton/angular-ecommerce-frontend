@@ -120,6 +120,15 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="street" type="text">
+                                <!-- Validation for Steet invalid and touched in form-->
+                                <div *ngIf="shippingAddressStreet!.invalid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)"
+                                    class="alert alert-danger mt-1">
+                                    <div
+                                        *ngIf="shippingAddressStreet?.errors?.['required'] || shippingAddressStreet?.errors?.['notOnlyWhitespace']">
+                                        Street is required
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>
@@ -130,6 +139,15 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="city" type="text">
+                                <!-- Validation for City invalid and touched in form-->
+                                <div *ngIf="shippingAddressCity!.invalid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)"
+                                    class="alert alert-danger mt-1">
+                                    <div
+                                        *ngIf="shippingAddressCity?.errors?.['required'] || shippingAddressCity?.errors?.['notOnlyWhitespace']">
+                                        City is required
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>
@@ -145,6 +163,16 @@
                                         {{ state.name}}
                                     </option>
                                 </select>
+
+                                <!-- Validation for State invalid and touched in form-->
+                                <div *ngIf="shippingAddressState!.invalid && (shippingAddressState?.dirty || shippingAddressState?.touched)"
+                                    class="alert alert-danger mt-1">
+                                    <div *ngIf="shippingAddressState?.errors?.['required']">
+                                        State is required
+                                    </div>
+
+                                </div>
+
                             </div>
 
                         </div>
@@ -155,6 +183,16 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
+
+                                <!-- Validation for Zip Code invalid and touched in form-->
+                                <div *ngIf="shippingAddressZipCode!.invalid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)"
+                                    class="alert alert-danger mt-1">
+                                    <div *ngIf="shippingAddressZipCode?.errors?.['required'] || shippingAddressZipCode?.errors?.['notOnlyWhitespace']">
+                                        Zip Code is required
+                                    </div>
+
+                                </div>
+
                             </div>
 
                         </div>
