@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 import { LivemiltonShopFormService } from 'src/app/services/livemilton-shop-form.service';
 import { LivemiltonValidators } from 'src/app/validators/livemilton-validators';
 
@@ -34,10 +35,14 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private livemiltonShopFormservice: LivemiltonShopFormService
+    private livemiltonShopFormservice: LivemiltonShopFormService,
+    private cartService: CartService,
   ) {}
 
   ngOnInit(): void {
+
+    this.reviewCartDetails();
+
     //formgroup
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -132,6 +137,17 @@ export class CheckoutComponent implements OnInit {
       console.log('Retrieved countries: ' + JSON.stringify(data));
       this.countries = data;
     });
+  }
+
+  reviewCartDetails(){
+    //subscribe to cartService.totalQuantity
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity=totalQuantity
+    );
+    //subscribe to cartService.totalPrice
+    this.cartService.totalPrice.subscribe(
+      totalPrice=> this.totalPrice= totalPrice
+    );
   }
 
   get firstName() {
