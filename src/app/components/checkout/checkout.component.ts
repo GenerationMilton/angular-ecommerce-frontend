@@ -5,9 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
+import { CheckoutService } from 'src/app/services/checkout.service';
 import { LivemiltonShopFormService } from 'src/app/services/livemilton-shop-form.service';
 import { LivemiltonValidators } from 'src/app/validators/livemilton-validators';
 
@@ -37,6 +39,9 @@ export class CheckoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private livemiltonShopFormservice: LivemiltonShopFormService,
     private cartService: CartService,
+    private checkoutService: CheckoutService,
+    private router: Router
+    
   ) {}
 
   ngOnInit(): void {
@@ -237,22 +242,43 @@ export class CheckoutComponent implements OnInit {
 
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
+      return;
     }
 
-    console.log(this.checkoutFormGroup.get('customer')!.value);
-    console.log(
-      'The email address is ' +
-        this.checkoutFormGroup.get('customer')!.value.email
-    );
+    // set up order
 
-    console.log(
-      'The shipping address country is ' +
-        this.checkoutFormGroup.get('shippingAddress')!.value.country.name
-    );
-    console.log(
-      'The shipping address state is ' +
-        this.checkoutFormGroup.get('shippingAddress')!.value.state.name
-    );
+    // get cart items
+
+    // create orderItems from cartItems
+
+    // set up purchase
+
+    // populate purchase - customer
+
+    // populate purchase - shipping address
+
+    // populate purchase - billing address
+
+    // populate purchase -order and orderItems
+
+    // call REST API via the CheckoutService
+
+
+    //remove this logs, but kept to reference
+    // console.log(this.checkoutFormGroup.get('customer')!.value);
+    // console.log(
+    //   'The email address is ' +
+    //     this.checkoutFormGroup.get('customer')!.value.email
+    // );
+
+    // console.log(
+    //   'The shipping address country is ' +
+    //     this.checkoutFormGroup.get('shippingAddress')!.value.country.name
+    // );
+    // console.log(
+    //   'The shipping address state is ' +
+    //     this.checkoutFormGroup.get('shippingAddress')!.value.state.name
+    // );
   }
 
   handleMonthsAndYears() {
