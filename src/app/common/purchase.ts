@@ -10,4 +10,6 @@ export class Purchase {
     billingAddress?: Address;
     order?: Order;
     orderItem?: OrderItem[];
+  shippingState: any;
+  shippingCountry: any;
 }
