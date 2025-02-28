@@ -9,7 +9,7 @@ export class Purchase {
     shippingAddress?: Address;
     billingAddress?: Address;
     order?: Order;
-    orderItem?: OrderItem[];
+    orderItems?: OrderItem[];
   shippingState: any;
   shippingCountry: any;
 }
