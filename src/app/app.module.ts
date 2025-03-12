@@ -17,9 +17,30 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
+
+import{
+  OktaAuthModule,
+  OktaCallbackComponent,
+  OKTA_CONFIG
+} from '@okta/okta-angular';
+
+import { OktaAuth } from '@okta/okta-auth-js';
+
+import myAppConfig from './config/my-app-config';
+
+const oktaConfig = myAppConfig.oidc;
+
+const oktaAuth= new OktaAuth(oktaConfig);
 
 //define our routes of products
 const routes:Routes=[
+  //once the user is authenticated, they are redirected to your app - normally you would need to parse the response
+  //and store the OAuth+OIDC tokens
+  //The OktaCallbackComponent does this for you
+  {path:'login/callback', component: OktaCallbackComponent},
+  {path:'login', component: LoginComponent},
   {path:'checkout', component: CheckoutComponent},
   {path:'cart-details', component:CartDetailsComponent},
   //new path for products details component
@@ -43,7 +64,9 @@ const routes:Routes=[
     ProductDetailsComponent,
     CartStatusComponent,
     CartDetailsComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    LoginComponent,
+    LoginStatusComponent
   ],
   //declare RouterModule for our routes
   imports: [
@@ -52,8 +75,9 @@ const routes:Routes=[
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
+    OktaAuthModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: {oktaAuth}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
