@@ -36,6 +36,9 @@ const oktaAuth= new OktaAuth(oktaConfig);
 
 //define our routes of products
 const routes:Routes=[
+  //once the user is authenticated, they are redirected to your app - normally you would need to parse the response
+  //and store the OAuth+OIDC tokens
+  //The OktaCallbackComponent does this for you
   {path:'login/callback', component: OktaCallbackComponent},
   {path:'login', component: LoginComponent},
   {path:'checkout', component: CheckoutComponent},
